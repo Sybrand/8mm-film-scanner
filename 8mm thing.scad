@@ -34,7 +34,8 @@ union() {
             rotate(a=[0,0,360/sprockets*sprocket])
                 translate([-sprocket_height/2,radius-1,0])
                     color([0,1,0])
-                    cube(size = [sprocket_height,2,sprocket_width], center=false);
+                    // adding +1 to sprocket_width, to make it a bit higher
+                    cube(size = [sprocket_height,2,sprocket_width+0.1], center=false);
                 
         middle_drop = 0.5;
         base_height = 2;
@@ -103,15 +104,18 @@ translate([30, 0, 0]) {
             // bottom guard
             cylinder(3, base_radius+side, base_radius+side);
             
+            // but for film
             translate([0, 0, 3])
                 cylinder(0.51+sprocket_tolerance/2, base_radius, base_radius);
             
             // slot part
             translate([0, 0, 3+0.51+sprocket_tolerance/2])
-                cylinder(2, 6.4, 6.4);
+                // 6.4 is too small
+                cylinder(2, 6.3, 6.3);
             
             translate([0, 0, 3+0.51+sprocket_tolerance/2+2])
-                cylinder(2, 6.4, 4.5);
+                // 6.4 is too small
+                cylinder(2, 6.3, 4.5);
         }
         translate([0, 0, -1])
             cylinder(10, 4.5, 4.5);
