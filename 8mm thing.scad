@@ -14,28 +14,31 @@ sprockets = 15;
 circumference = sprockets * peg_to_peg;
 radius = circumference / (2 * PI);
 peg_length = radius + 1;
-sprocket_height = 1.14;
-sprocket_width = 0.91;
+film_sprocket_height = 1.14;
+film_sprocket_width = 0.91;
+sprocket_tolerance = 0.2;
+sprocket_height = film_sprocket_height - sprocket_tolerance;
+sprocket_width = film_sprocket_width - sprocket_tolerance;
 
-for (sprocket = [0 : 1 : sprockets])
-    rotate(a=[0,0,360/sprockets*sprocket])
-        translate([-sprocket_height/2,radius,2.51])
-            color([0,1,0])
-            cube(size = [sprocket_height,1,sprocket_width], center=false);
 
-translate([0, 0, 0])
+base_radius = radius;
+side = 2;
+
+difference() {
 difference() {
 
 union() {
-        // bottom guard
-        base_radius = radius;
-        side = 2;
+    
+        for (sprocket = [1 : 1 : sprockets])
+            rotate(a=[0,0,360/sprockets*sprocket])
+                translate([-sprocket_height/2,radius-1,0])
+                    color([0,1,0])
+                    cube(size = [sprocket_height,2,sprocket_width], center=false);
+                
         middle_drop = 0.5;
         base_height = 2;
         tooth_section = 1.42;
         half_sunken_section = 2.79;
-
-        cylinder(base_height, base_radius+side, base_radius+side);
 
         //  |              |
         //  |              |
@@ -57,24 +60,23 @@ union() {
         //  ||1.14    |    |--x
         // bit for teeth
         
-        translate([0, 0, base_height])
-            cylinder(tooth_section, base_radius, base_radius);
+        cylinder(tooth_section, base_radius, base_radius);
         
         // sunken area to protect film
-        translate([0, 0, tooth_section+base_height])
+        translate([0, 0, tooth_section])
             cylinder(half_sunken_section, base_radius, base_radius-middle_drop);
-        translate([0, 0, tooth_section+base_height+half_sunken_section])
+        translate([0, 0, tooth_section+half_sunken_section])
             cylinder(half_sunken_section, base_radius-middle_drop, base_radius);
             
         // bit for other side of teeth
-        translate([0, 0, tooth_section+base_height+half_sunken_section+half_sunken_section])
+        translate([0, 0, tooth_section+half_sunken_section+half_sunken_section])
             cylinder(1, base_radius, base_radius);
             
         // top guard
-        translate([0, 0, tooth_section+base_height+half_sunken_section+half_sunken_section+1])
+        translate([0, 0, tooth_section+half_sunken_section+half_sunken_section+1])
             cylinder(base_height, base_radius, base_radius+side);
             
-        translate([0, 0, tooth_section+base_height+half_sunken_section+half_sunken_section+1+base_height])
+        translate([0, 0, tooth_section+half_sunken_section+half_sunken_section+1+base_height])
             cylinder(1, base_radius+side, base_radius+side);
             
         }
@@ -84,3 +86,21 @@ union() {
             cylinder(20, 4.5, 4.5);
     }
     
+    translate([0, 0, -1])
+        cylinder(3, 6.5, 6.5);
+}
+
+
+translate([30, 0, 0]) {
+    
+    
+    // bottom guard
+    cylinder(3, base_radius+side, base_radius+side);
+    
+    translate([0, 0, 3])
+        cylinder(0.51+sprocket_tolerance/2, base_radius, base_radius);
+    
+    // slot part
+    translate([0, 0, 3+0.51+sprocket_tolerance/2])
+        cylinder(2, 6.4, 6.4);
+}
