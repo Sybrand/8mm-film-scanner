@@ -113,9 +113,6 @@ translate([30, 0, 0]) {
                 // 6.4 is too small
                 cylinder(2, 6.3, 6.3);
             
-            translate([0, 0, 3+0.51+sprocket_tolerance/2+2])
-                // 6.4 is too small
-                cylinder(2, 6.3, 4.5);
         }
         translate([0, 0, -1])
             cylinder(10, 4.5, 4.5);
