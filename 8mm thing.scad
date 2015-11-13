@@ -26,6 +26,7 @@ side = 2;
 
 difference() {
 difference() {
+difference() {
 
 union() {
     
@@ -81,26 +82,39 @@ union() {
             
         }
  
-        // this should match the diameter of the bearings
-        translate([0, 0, -1])
-            cylinder(20, 4.5, 4.5);
-    }
-    
-    translate([0, 0, -1])
-        cylinder(3, 6.5, 6.5);
+// this should match the diameter of the bearings
+translate([0, 0, -1])
+cylinder(20, 4.5, 4.5);
+}
+// subtract space in the bottom
+translate([0, 0, -1])
+cylinder(3, 6.5, 6.5);
+}
+// smoothly transition
+translate([0, 0, 1.999])
+cylinder(2, 6.5, 4.5);
 }
 
 
 translate([30, 0, 0]) {
     
-    
-    // bottom guard
-    cylinder(3, base_radius+side, base_radius+side);
-    
-    translate([0, 0, 3])
-        cylinder(0.51+sprocket_tolerance/2, base_radius, base_radius);
-    
-    // slot part
-    translate([0, 0, 3+0.51+sprocket_tolerance/2])
-        cylinder(2, 6.4, 6.4);
+    difference() {
+        union() {
+            // bottom guard
+            cylinder(3, base_radius+side, base_radius+side);
+            
+            translate([0, 0, 3])
+                cylinder(0.51+sprocket_tolerance/2, base_radius, base_radius);
+            
+            // slot part
+            translate([0, 0, 3+0.51+sprocket_tolerance/2])
+                cylinder(2, 6.4, 6.4);
+            
+            translate([0, 0, 3+0.51+sprocket_tolerance/2+2])
+                cylinder(2, 6.4, 4.5);
+        }
+        translate([0, 0, -1])
+            cylinder(10, 4.5, 4.5);
+        
+}
 }
