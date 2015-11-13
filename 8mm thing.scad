@@ -20,10 +20,13 @@ sprocket_tolerance = 0.2;
 sprocket_height = film_sprocket_height - sprocket_tolerance;
 sprocket_width = film_sprocket_width - sprocket_tolerance;
 
+half_sunken_section = 2.79;
+tooth_section = 1.42;
 
 base_radius = radius;
 side = 2;
 
+difference() {
 difference() {
 difference() {
 difference() {
@@ -39,8 +42,8 @@ union() {
                 
         middle_drop = 0.5;
         base_height = 2;
-        tooth_section = 1.42;
-        half_sunken_section = 2.79;
+        
+        
 
         //  |              |
         //  |              |
@@ -75,13 +78,15 @@ union() {
             cylinder(1, base_radius, base_radius);
             
         // top guard
+        /*
         translate([0, 0, tooth_section+half_sunken_section+half_sunken_section+1])
             cylinder(base_height, base_radius, base_radius+side);
             
         translate([0, 0, tooth_section+half_sunken_section+half_sunken_section+1+base_height])
             cylinder(1, base_radius+side, base_radius+side);
-            
+        */
         }
+        
  
 // this should match the diameter of the bearings
 translate([0, 0, -1])
@@ -91,9 +96,13 @@ cylinder(20, 4.5, 4.5);
 translate([0, 0, -1])
 cylinder(3, 6.5, 6.5);
 }
-// smoothly transition
+// smoothly transition subtraction in bottom
 translate([0, 0, 1.999])
 cylinder(2, 6.5, 4.5);
+}
+// subtract from top
+translate([0, 0, tooth_section+half_sunken_section+half_sunken_section+1-2])
+cylinder(3, 6.5, 6.5);
 }
 
 
@@ -111,7 +120,29 @@ translate([30, 0, 0]) {
             // slot part
             translate([0, 0, 3+0.51+sprocket_tolerance/2])
                 // 6.4 is too small
-                cylinder(2, 6.3, 6.3);
+                // 6.3 goes in with some pressure
+                cylinder(1.8, 6.3, 6.3);
+            
+        }
+        translate([0, 0, -1])
+            cylinder(10, 4.5, 4.5);
+        
+}
+}
+
+
+translate([-30, 0, 0]) {
+    
+    difference() {
+        union() {
+            // top guard
+            cylinder(3, base_radius+side, base_radius+side);
+                        
+            // slot part
+            translate([0, 0, 3])
+                // 6.4 is too small
+                // 6.3 goes in with some pressure
+                cylinder(1.8, 6.3, 6.3);
             
         }
         translate([0, 0, -1])
