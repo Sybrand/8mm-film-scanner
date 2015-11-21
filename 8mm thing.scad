@@ -124,7 +124,7 @@ module bottom(hole_radius) {
             
             // photo interruptor
             difference() {
-                cylinder(2, base_radius+side+10, base_radius+side+10);
+                cylinder(2, base_radius+side+5, base_radius+side+5);
                 for (count = [1 : 1 : num_teeth]) {
                     rotate(a=[0,0,360/num_teeth*count]) {
                         translate([-0.5,radius,-1]) {
