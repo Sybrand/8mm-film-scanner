@@ -2,13 +2,13 @@
 
 ## Frame detection
 
-### Spindle with sprockets
+### Spindle with teeth
 
 Refer to openSCAD files
 
-###
+### Photo interrupter
 
-Emmitter detector LED
+Photo Interrupter OS25B10 (R13.96)
 
 ## Gate
 

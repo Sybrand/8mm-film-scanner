@@ -59,9 +59,11 @@ base_radius = radius;
 side = 2;
 
 // DRAW TOP
-translate([-radius*2.5, 0, 0]) top(hole_in_the_middle_radius);
+translate([-radius*2.5, 0, 0]) 
+    top(hole_in_the_middle_radius);
 // DRAW BOTTOM
-translate([radius*2.5, 0, 0]) bottom(hole_in_the_middle_radius);
+translate([radius*3, 0, 0]) 
+    bottom(hole_in_the_middle_radius);
 // DRAW MIDDLE
 middle(hole_in_the_middle_radius);
 
@@ -120,6 +122,17 @@ module bottom(hole_radius) {
             translate([0, 0, 3+0.51+sprocket_tolerance/2])
                 cylinder(1.8, hole_radius+male_width, hole_radius+male_width);
             
+            // photo interruptor
+            difference() {
+                cylinder(2, base_radius+side+10, base_radius+side+10);
+                for (count = [1 : 1 : num_teeth]) {
+                    rotate(a=[0,0,360/num_teeth*count]) {
+                        translate([-0.5,radius,-1]) {
+                            cube([1, 11+side, 4]);
+                        }
+                    }
+                }
+            }
         }
         translate([0, 0, -1])
             cylinder(10, hole_radius, hole_radius);
