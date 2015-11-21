@@ -1,5 +1,35 @@
 $fn=180;
 
+//  |              |
+//  |              |
+//--|              |
+//  |              |
+//  | --------     |
+//  ||<-0.91->|0.51|
+//  || ^      |    |
+//  ||1.14    |    |--x
+//  || v      |    |  ^
+//  | --------     |  |
+//  |<-   1.42   ->|  |
+//  |              |  |   
+//--|              | 4.23
+//  |              |  |
+//  | --------     |  |
+//  ||<-0.91->|0.51|  |
+//  || ^      |    |  v
+//  ||1.14    |    |--x
+
+
+// ==================
+// Hole in the middle
+// ==================
+// Mechano screws have a diameter of 2.8mm
+// The bearings I bought have a diameter of 14mm
+hole_in_the_middle_diameter = 14;
+hole_in_the_middle_radius = hole_in_the_middle_diameter / 2;
+female_width = 5.5;
+male_width = female_width - 0.2;
+
 // =====
 // Teath
 // =====
@@ -10,18 +40,10 @@ $fn=180;
 //
 // the curcumference of the doodad, has to be a multiple of 4.23,
 // 10 teath == 10 * 4.23
-//
-// ==================
-// Hole in the middle
-// ==================
-// Mechano screws have a diameter of 2.8mm
-// The bearings I'm looking at buying, have a diameter of 9mm
-hole_in_the_middle_diameter = 2.8;
-hole_in_the_middle_radius = hole_in_the_middle_diameter / 2;
-
-tooth_to_tooth = 4.23;
-sprockets = 15;
-circumference = sprockets * tooth_to_tooth;
+// 4.23 seems to be just a bit too close together
+tooth_to_tooth = 4.25;
+num_teeth = 25;
+circumference = num_teeth * tooth_to_tooth;
 radius = circumference / (2 * PI);
 peg_length = radius + 1;
 film_sprocket_height = 1.14;
@@ -37,13 +59,11 @@ base_radius = radius;
 side = 2;
 
 // DRAW TOP
-translate([-30, 0, 0]) top(hole_in_the_middle_radius);
+translate([-radius*2.5, 0, 0]) top(hole_in_the_middle_radius);
 // DRAW BOTTOM
-translate([30, 0, 0]) bottom(hole_in_the_middle_radius);
+translate([radius*2.5, 0, 0]) bottom(hole_in_the_middle_radius);
 // DRAW MIDDLE
 middle(hole_in_the_middle_radius);
-//teeth(sprockets, radius);
-
 
 module teeth(num_teeth, radius) {
     for (count = [1 : 1 : num_teeth]) {
@@ -58,87 +78,30 @@ module teeth(num_teeth, radius) {
     }
 }
 
-//rotate(a=[90,0,0])
-//    triangle(sprocket_height, sprocket_width+0.2, 1);
-
 module middle(hole_radius) {
+    difference() {
+        union() {
+            teeth(num_teeth, radius);              
+            middle_drop = 0.5;
+            base_height = 2;
 
-difference() {
-difference() {
-difference() {
-difference() {
+            // bit for teeth
+            cylinder(tooth_section, base_radius, base_radius);
 
-union() {
-   teeth(sprockets, radius); 
-    /*
-    for (sprocket = [1 : 1 : sprockets])
-        rotate(a=[0,0,360/sprockets*sprocket]) {
-            translate([-sprocket_height/2,radius-1,0]) {
-                color([0,1,0])
-                // adding +0.2 to sprocket_width, to make it a bit higher
-                cube(size = [sprocket_height,2,sprocket_width+0.2], center=false);
+            // sunken area to protect film
+            translate([0, 0, tooth_section])
+                cylinder(half_sunken_section, base_radius, base_radius-middle_drop);
+            translate([0, 0, tooth_section+half_sunken_section])
+                cylinder(half_sunken_section, base_radius-middle_drop, base_radius);
                 
-                triangle(sprocket_height, sprocket_width+0.2, 1);
-            }
+            // bit for other side of teeth
+            translate([0, 0, tooth_section+half_sunken_section+half_sunken_section])
+                cylinder(1, base_radius, base_radius);
         }
-    */
-                
-        middle_drop = 0.5;
-        base_height = 2;
-        
-        
-
-        //  |              |
-        //  |              |
-        //--|              |
-        //  |              |
-        //  | --------     |
-        //  ||<-0.91->|0.51|
-        //  || ^      |    |
-        //  ||1.14    |    |--x
-        //  || v      |    |  ^
-        //  | --------     |  |
-        //  |<-   1.42   ->|  |
-        //  |              |  |   
-        //--|              | 4.23
-        //  |              |  |
-        //  | --------     |  |
-        //  ||<-0.91->|0.51|  |
-        //  || ^      |    |  v
-        //  ||1.14    |    |--x
-        // bit for teeth
-        
-        cylinder(tooth_section, base_radius, base_radius);
-        
-        // sunken area to protect film
-        translate([0, 0, tooth_section])
-            cylinder(half_sunken_section, base_radius, base_radius-middle_drop);
-        translate([0, 0, tooth_section+half_sunken_section])
-            cylinder(half_sunken_section, base_radius-middle_drop, base_radius);
-            
-        // bit for other side of teeth
-        translate([0, 0, tooth_section+half_sunken_section+half_sunken_section])
-            cylinder(1, base_radius, base_radius);
-        }
-        
- 
-// this should match the diameter of the bearings
-translate([0, 0, -1])
-cylinder(20, hole_radius, hole_radius);
-}
-// subtract space in the bottom
-translate([0, 0, -1])
-cylinder(3, 6.5, 6.5);
-}
-// smoothly transition subtraction in bottom
-translate([0, 0, 1.999])
-cylinder(2, 6.5, 4.5);
-}
-// subtract from top
-translate([0, 0, tooth_section+half_sunken_section+half_sunken_section+1-2])
-cylinder(3, 6.5, 6.5);
-}
-
+        // this should match the diameter of the bearings
+        translate([0, 0, -1])
+        cylinder(20, hole_radius+female_width, hole_radius+female_width);
+    }
 }
 
 
@@ -153,11 +116,9 @@ module bottom(hole_radius) {
             translate([0, 0, 3])
                 cylinder(0.51+sprocket_tolerance/2, base_radius, base_radius);
             
-            // slot part
+            // slot part (male)
             translate([0, 0, 3+0.51+sprocket_tolerance/2])
-                // 6.4 is too small
-                // 6.3 goes in with some pressure
-                cylinder(1.8, 6.3, 6.3);
+                cylinder(1.8, hole_radius+male_width, hole_radius+male_width);
             
         }
         translate([0, 0, -1])
@@ -172,11 +133,9 @@ module top(hole_radius) {
             // top guard
             cylinder(3, base_radius+side, base_radius+side);
                         
-            // slot part
+            // slot part (male)
             translate([0, 0, 3])
-                // 6.4 is too small
-                // 6.3 goes in with some pressure
-                cylinder(1.8, 6.3, 6.3);
+                cylinder(1.8, hole_radius+male_width, hole_radius+male_width);
             
         }
         translate([0, 0, -1])
