@@ -9,11 +9,12 @@ hole_in_the_middle_radius = hole_in_the_middle_diameter / 2;
 tooth_length = 3;
 tooth_width = 1.5;
 
-bottom();
-translate([0, outside_diameter*1.5, 0])
-    middle(outside_diameter);
-translate([0, -outside_diameter*2.0, 0])
+
+translate([0, outside_diameter*2.0, 0])
     bottom();
+middle(outside_diameter);
+//translate([0, -outside_diameter*2.0, 0])
+//    bottom();
 
 module bottom() {
     difference() {
