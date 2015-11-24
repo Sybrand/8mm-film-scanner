@@ -4,7 +4,10 @@ outside_diameter = 12.95;
 outside_radius = outside_diameter/2;
 tooth_part_height = 11.6;
 
-hole_in_the_middle_diameter = 14;
+// 14mm not big enough
+// upped it to 14.2
+// 14.2 not enough, upped to 14.4
+hole_in_the_middle_diameter = 14.4;
 hole_in_the_middle_radius = hole_in_the_middle_diameter / 2;
 tooth_length = 3;
 tooth_width = 1.5;
@@ -13,8 +16,8 @@ tooth_width = 1.5;
 translate([0, outside_diameter*2.0, 0])
     bottom();
 middle(outside_diameter);
-//translate([0, -outside_diameter*2.0, 0])
-//    bottom();
+translate([0, -outside_diameter*2.0, 0])
+    bottom();
 
 module bottom() {
     difference() {

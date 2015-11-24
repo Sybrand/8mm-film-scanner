@@ -25,9 +25,11 @@ $fn=180;
 // ==================
 // Mechano screws have a diameter of 2.8mm
 // The bearings I bought have a diameter of 14mm
-hole_in_the_middle_diameter = 14;
+// 14mm is too small, trying 14.2
+// 14.2 is too small, upped to 14.4
+hole_in_the_middle_diameter = 14.4;
 hole_in_the_middle_radius = hole_in_the_middle_diameter / 2;
-female_width = 5.5;
+female_width = 4;
 male_width = female_width - 0.2;
 
 // =====
@@ -41,8 +43,9 @@ male_width = female_width - 0.2;
 // the curcumference of the doodad, has to be a multiple of 4.23,
 // 10 teath == 10 * 4.23
 // 4.23 seems to be just a bit too close together
-tooth_to_tooth = 4.25;
-num_teeth = 25;
+// 4.25 is too far apart
+tooth_to_tooth = 4.24;
+num_teeth = 21;
 circumference = num_teeth * tooth_to_tooth;
 radius = circumference / (2 * PI);
 peg_length = radius + 1;
@@ -59,11 +62,11 @@ base_radius = radius;
 side = 2;
 
 // DRAW TOP
-translate([-radius*2.5, 0, 0]) 
-    top(hole_in_the_middle_radius);
+//translate([-radius*2.5, 0, 0]) 
+//    top(hole_in_the_middle_radius);
 // DRAW BOTTOM
-translate([radius*3, 0, 0]) 
-    bottom(hole_in_the_middle_radius);
+//translate([radius*3, 0, 0]) 
+//    bottom(hole_in_the_middle_radius);
 // DRAW MIDDLE
 middle(hole_in_the_middle_radius);
 
@@ -128,7 +131,7 @@ module bottom(hole_radius) {
                 for (count = [1 : 1 : num_teeth]) {
                     rotate(a=[0,0,360/num_teeth*count]) {
                         translate([-0.5,radius,-1]) {
-                            cube([1, 11+side, 4]);
+                            cube([1.5, 11+side, 4]);
                         }
                     }
                 }
