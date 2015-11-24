@@ -13,10 +13,10 @@ tooth_length = 3;
 tooth_width = 1.5;
 
 
-translate([0, outside_diameter*2.0, 0])
-    bottom();
-middle(outside_diameter);
-translate([0, -outside_diameter*2.0, 0])
+//translate([0, outside_diameter*2.0, 0])
+//    bottom();
+//middle(outside_diameter);
+//translate([0, -outside_diameter*2.0, 0])
     bottom();
 
 module bottom() {

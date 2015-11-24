@@ -62,11 +62,11 @@ base_radius = radius;
 side = 2;
 
 // DRAW TOP
-//translate([-radius*2.5, 0, 0]) 
-//    top(hole_in_the_middle_radius);
+translate([-radius*2.5, 0, 0]) 
+    top(hole_in_the_middle_radius);
 // DRAW BOTTOM
-//translate([radius*3, 0, 0]) 
-//    bottom(hole_in_the_middle_radius);
+translate([radius*3, 0, 0]) 
+    bottom(hole_in_the_middle_radius);
 // DRAW MIDDLE
 middle(hole_in_the_middle_radius);
 
