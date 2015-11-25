@@ -1,6 +1,7 @@
 $fn=180;
 
-outside_diameter = 12.95;
+// 12.95 is too large to fit into film canister
+outside_diameter = 12.8;
 outside_radius = outside_diameter/2;
 tooth_part_height = 11.6;
 
@@ -15,9 +16,9 @@ tooth_width = 1.5;
 
 //translate([0, outside_diameter*2.0, 0])
 //    bottom();
-//middle(outside_diameter);
+middle(outside_diameter);
 //translate([0, -outside_diameter*2.0, 0])
-    bottom();
+//    bottom();
 
 module bottom() {
     difference() {

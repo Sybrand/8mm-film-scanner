@@ -44,7 +44,8 @@ male_width = female_width - 0.2;
 // 10 teath == 10 * 4.23
 // 4.23 seems to be just a bit too close together
 // 4.25 is too far apart
-tooth_to_tooth = 4.24;
+// 4.24 is also too far apart. Weird. Let's try 4.23 again (and for good measure, 4.22)
+tooth_to_tooth = 4.22;
 num_teeth = 21;
 circumference = num_teeth * tooth_to_tooth;
 radius = circumference / (2 * PI);
@@ -62,11 +63,11 @@ base_radius = radius;
 side = 2;
 
 // DRAW TOP
-translate([-radius*2.5, 0, 0]) 
-    top(hole_in_the_middle_radius);
+//translate([-radius*2.5, 0, 0]) 
+//    top(hole_in_the_middle_radius);
 // DRAW BOTTOM
-translate([radius*3, 0, 0]) 
-    bottom(hole_in_the_middle_radius);
+//translate([radius*3, 0, 0]) 
+//    bottom(hole_in_the_middle_radius);
 // DRAW MIDDLE
 middle(hole_in_the_middle_radius);
 
