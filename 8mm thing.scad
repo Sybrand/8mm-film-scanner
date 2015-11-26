@@ -46,7 +46,8 @@ male_width = female_width - 0.2;
 // 4.24 is also too far apart. 
 // 4.23 is also too far apart
 // 4.22 is ALMOST perfect.
-tooth_to_tooth = 4.21;
+// 4.21 soooooo close to perfece
+tooth_to_tooth = 4.20;
 num_teeth = 21;
 circumference = num_teeth * tooth_to_tooth;
 radius = circumference / (2 * PI);
@@ -64,11 +65,11 @@ base_radius = radius;
 side = 2;
 
 // DRAW TOP
-//translate([-radius*2.5, 0, 0]) 
-//    top(hole_in_the_middle_radius);
+translate([-radius*2.5, 0, 0]) 
+    top(hole_in_the_middle_radius);
 // DRAW BOTTOM
-//translate([radius*3, 0, 0]) 
-//    bottom(hole_in_the_middle_radius);
+translate([radius*2.5, 0, 0]) 
+    bottom(hole_in_the_middle_radius);
 // DRAW MIDDLE
 middle(hole_in_the_middle_radius);
 
@@ -88,7 +89,7 @@ module teeth(num_teeth, radius) {
 module middle(hole_radius) {
     difference() {
         union() {
-            teeth(num_teeth, radius);              
+            //teeth(num_teeth, radius);              
             middle_drop = 0.5;
             base_height = 2;
 
@@ -128,6 +129,7 @@ module bottom(hole_radius) {
                 cylinder(1.8, hole_radius+male_width, hole_radius+male_width);
             
             // photo interruptor
+            /*
             difference() {
                 cylinder(2, base_radius+side+5, base_radius+side+5);
                 for (count = [1 : 1 : num_teeth]) {
@@ -138,6 +140,7 @@ module bottom(hole_radius) {
                     }
                 }
             }
+            */
         }
         translate([0, 0, -1])
             cylinder(10, hole_radius, hole_radius);
