@@ -1,7 +1,8 @@
 $fn=180;
 
 // 12.95 is too large to fit into film canister
-outside_diameter = 12.8;
+// 12.8 might also be just a bit too snug
+outside_diameter = 12.5;
 outside_radius = outside_diameter/2;
 tooth_part_height = 11.6;
 
@@ -11,7 +12,8 @@ tooth_part_height = 11.6;
 hole_in_the_middle_diameter = 14.4;
 hole_in_the_middle_radius = hole_in_the_middle_diameter / 2;
 tooth_length = 3;
-tooth_width = 1.5;
+// 1.5 is a bit too wide for tooth width - it's a very snug fit, that might damage the plastic canisters
+tooth_width = 1.2;
 
 
 //translate([0, outside_diameter*2.0, 0])

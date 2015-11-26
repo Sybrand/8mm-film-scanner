@@ -42,10 +42,11 @@ male_width = female_width - 0.2;
 //
 // the curcumference of the doodad, has to be a multiple of 4.23,
 // 10 teath == 10 * 4.23
-// 4.23 seems to be just a bit too close together
 // 4.25 is too far apart
-// 4.24 is also too far apart. Weird. Let's try 4.23 again (and for good measure, 4.22)
-tooth_to_tooth = 4.22;
+// 4.24 is also too far apart. 
+// 4.23 is also too far apart
+// 4.22 is ALMOST perfect.
+tooth_to_tooth = 4.21;
 num_teeth = 21;
 circumference = num_teeth * tooth_to_tooth;
 radius = circumference / (2 * PI);
