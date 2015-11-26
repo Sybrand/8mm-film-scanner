@@ -16,11 +16,11 @@ tooth_length = 3;
 tooth_width = 1.2;
 
 
-//translate([0, outside_diameter*2.0, 0])
-//    bottom();
+translate([0, outside_diameter*2.0, 0])
+    bottom();
 middle(outside_diameter);
-//translate([0, -outside_diameter*2.0, 0])
-//    bottom();
+translate([0, -outside_diameter*2.0, 0])
+    bottom();
 
 module bottom() {
     difference() {
@@ -29,7 +29,8 @@ module bottom() {
             translate([0,0,-1])
                 cylinder(10, hole_in_the_middle_radius, hole_in_the_middle_radius);
         }
-        female_tooth_width = tooth_width + 0.2;
+        // 0.2 is juuuuust a bit tight
+        female_tooth_width = tooth_width + 0.3;
         for (count = [1 : 1 : 3]) {
             rotate(a=[0,0,360/3*count]) {
                 translate([-female_tooth_width/2,0,4]) {
@@ -41,8 +42,8 @@ module bottom() {
 }
 
 module middle() {
-    
-    inside_diameter = 8;
+    // Inside diameter has to be big enough to allow 5mm thread through
+    inside_diameter = 5;
     inside_radius = inside_diameter/2;
 
     difference() {
