@@ -16,11 +16,11 @@ tooth_length = 3;
 tooth_width = 1.2;
 
 
-translate([0, outside_diameter*2.0, 0])
-    bottom();
+//translate([0, outside_diameter*2.0, 0])
+//    bottom();
 middle(outside_diameter);
-translate([0, -outside_diameter*2.0, 0])
-    bottom();
+//translate([0, -outside_diameter*2.0, 0])
+//    bottom();
 
 module bottom() {
     difference() {
@@ -42,8 +42,11 @@ module bottom() {
 }
 
 module middle() {
-    // Inside diameter has to be big enough to allow 5mm thread through
-    inside_diameter = 5;
+    // Inside diameter has to be big enough to allow 5mm thread through.
+    // If we make it only 5mm however, the plastic gets so hot (on this small print)
+    // that everything just mushes on the inside. So instead, we give the wall a width
+    // of 1.2mm, which should be strong enough.
+    inside_diameter = outside_diameter-2.4;
     inside_radius = inside_diameter/2;
 
     difference() {
